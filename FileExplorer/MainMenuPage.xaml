@@ -194,7 +194,14 @@
             </PivotItem>
             <PivotItem Header="Settings">
                 <!--Pivot content goes here-->
-                <TextBlock Text="Content of pivot item 3."/>
+                <Grid>
+                    <Button x:Name = "btnClear" Content = "Clear Data"
+              HorizontalAlignment = "Left" Margin = "0,10,0,0"
+                 VerticalAlignment = "Top" Width = "191" FontSize="22" Height="42" Click="ClearData"/>
+                    <Button x:Name = "btnChangePW" Content = "Change Password"
+              HorizontalAlignment = "Left" Margin = "0,87,0,0"
+                 VerticalAlignment = "Top" Width = "191" FontSize="22" Height="52" Click="ChangePassWord"/>
+                </Grid>
             </PivotItem>
         </Pivot>
     </Grid>

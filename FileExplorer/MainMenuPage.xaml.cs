@@ -75,10 +75,12 @@ namespace FileExplorer
             {
                 //await ApplicationData.Current.LocalFolder.CreateFolderAsync("Data");
                 StorageFolder rootFolder = ApplicationData.Current.LocalFolder;
-                await rootFolder.CreateFolderAsync("Data", CreationCollisionOption.FailIfExists);
-                await rootFolder.CreateFolderAsync("RecycleBin", CreationCollisionOption.FailIfExists);
+                StorageFolder s3 = await rootFolder.CreateFolderAsync("MainFolder/RecycleBin", CreationCollisionOption.FailIfExists).AsTask().ConfigureAwait(false);
+                StorageFolder s1 =  await rootFolder.CreateFolderAsync("Data", CreationCollisionOption.FailIfExists).AsTask().ConfigureAwait(false);
+                StorageFolder s2 =  await rootFolder.CreateFolderAsync("RecycleBin", CreationCollisionOption.FailIfExists).AsTask().ConfigureAwait(false);
+               
                 //  StorageApplicationPermissions.FutureAccessList.Add(projectFolder, projectFolder.Path);
-                // Debug.WriteLine("Location " +projectFolder);
+                Debug.WriteLine("Location " + rootFolder);
             }
             catch (Exception ex)
             {
@@ -126,7 +128,7 @@ namespace FileExplorer
                 bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
                
             }
-            else if (fi.StorageItem.Name.IndexOf(".mp4") > 0 || fi.StorageItem.Name.IndexOf(".mp3") > 0)
+            else if (fi.StorageItem.Name.IndexOf(".mp4") > 0 || fi.StorageItem.Name.IndexOf(".mp3") > 0 || fi.StorageItem.Name.IndexOf(".wmv") > 0 || fi.StorageItem.Name.IndexOf(".wma") > 0)
             {
                 Debug.Write("OK it is video");
                 CoreApplicationView newView = CoreApplication.CreateNewView();
@@ -666,6 +668,34 @@ namespace FileExplorer
             //  Debug.WriteLine("SearchBox_QuerySubmitted", textQuery);
         }
 
+        private async void ChangePassWord(object sender, RoutedEventArgs e)
+        {
+            string text = await UIUtils.InputTextDialogAsync("Change new password");
+            if (text.Length > 0)
+            {
+                 UIUtils.ComposeEmail("your email", "You change new password is : " + text, null);
+            }
+        }
+
+        public async void ClearData(object sender, RoutedEventArgs e)
+        {
+            ContentDialog clearDataDialog = new ContentDialog
+            {
+                Title = "Are you sure delete data permanently ?",
+                Content = " If you delete this data, you won't be able to recover it. Do you want to delete it?",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel"
+            };
+            ContentDialogResult result = await clearDataDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                // todo delete file depend on type
+            }
+            else {
+              bool flag=  await UIUtils.ShowRatingReviewDialog();
+                // nothing to do
+            }
+        }
     }
 }
 

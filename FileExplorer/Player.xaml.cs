@@ -63,18 +63,35 @@ namespace FileExplorer
             myMediaPlayer.Source = mediaSource;
             mediaPlayer.CommandManager.IsEnabled = false;
             mediaPlayer.TimelineController = mediaTimelineController;
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += this.OnCloseRequest;
             //SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequest;
             Window.Current.Closed += (ss, ee) =>
             {
-                stopMediaPlayer();
+               // stopMediaPlayer();
             };
             Window.Current.Activated += (s, e) =>
             {
-                startOrPause(null, null);
+               // startOrPause(null, null);
             };
+            Loaded += Player_Loaded;
             
         }
-       
+
+        private void Player_Loaded(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            stopMediaPlayer();
+        }
+
+        public void CloseApp()
+        {
+            startOrPause(null, null);
+        }
+
 
         protected override  void OnNavigatedTo(NavigationEventArgs e)
         {

@@ -50,14 +50,14 @@ namespace FileExplorer
             emailMessage.To.Add(new EmailRecipient(recipient));
             emailMessage.Subject = "Backup Password";
             emailMessage.Body = contain;
-            if (attactment != null)
-            {
-                IRandomAccessStream randomAccessStream = attactment.AsRandomAccessStream();
-                var streamReference = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(randomAccessStream);
-                var Attachment = new Windows.ApplicationModel.Email.EmailAttachment(
-                    "sharebyemail.html", streamReference);
-                emailMessage.Attachments.Add(Attachment);
-            }
+            //if (attactment != null)
+            //{
+            //    IRandomAccessStream randomAccessStream = attactment.AsRandomAccessStream();
+            //    var streamReference = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromStream(randomAccessStream);
+            //    var Attachment = new Windows.ApplicationModel.Email.EmailAttachment(
+            //        "sharebyemail.html", streamReference);
+            //    emailMessage.Attachments.Add(Attachment);
+            //}
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
     }
